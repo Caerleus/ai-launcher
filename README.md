@@ -47,14 +47,7 @@ No cloud. No subscriptions. No data sent anywhere. Ever.
 ### Python Dependencies
 
 ```bash
-pip install flask flask-cors psutil pywebview
-
-## Installation
-
-```bash
-1. Clone the repository
-git clone https://github.com/your-username/ai-launcher.git
-cd ai-launcher
+1. pip install flask flask-cors psutil pywebview
 
 2. Install dependencies
 pip install flask flask-cors psutil pywebview
@@ -62,6 +55,10 @@ pip install flask flask-cors psutil pywebview
 3. Configure server/config.json (Optional)
 Adapt the paths to your machine (see ​Configuration​).
 ```
+
+## Installation
+
+Donload AI-Launcher-v1.0.0-windows.zip in repository 
 
 ## Usage
 
@@ -80,101 +77,101 @@ http://127.0.0.1:5000 (Optional)
 ## Features
 
 - 📁 Project Structure
-- AI-Launcher/
-- ├── run_launcher.bat          ← Start here
-- ├── server/
-- │   ├── app.py                ← Flask backend
-- │   ├── config.json           ← All configuration
-- │   ├── launcher.py           ← Process manager
-- │   └── utils.py              ← Utility functions
-- ├── models/
-- │   ├── chat/                 ← LLM Chat models (.gguf)
-- │   ├── coding/               ← LLM Coding models (.gguf)
-- │   ├── sd/                   ← Stable Diffusion models
-- │   ├── lora/                 ← LoRA files (.safetensors)
-- │   └── vae/                  ← VAE files
-- ├── llama.cpp/                ← llama-server binary
-- ├── stable-diffusion.cpp/     ← sd-server binary
-- └── web/
-- ├── index.html
-- ├── css/
-- └── js/
+AI-Launcher/
+├── run_launcher.bat          ← Start here
+├── server/
+│   ├── app.py                ← Flask backend
+│   ├── config.json           ← All configuration
+│   ├── launcher.py           ← Process manager
+│   └── utils.py              ← Utility functions
+├── models/
+│   ├── chat/                 ← LLM Chat models (.gguf)
+│   ├── coding/               ← LLM Coding models (.gguf)
+│   ├── sd/                   ← Stable Diffusion models
+│   ├── lora/                 ← LoRA files (.safetensors)
+│   └── vae/                  ← VAE files
+├── llama.cpp/                ← llama-server binary
+├── stable-diffusion.cpp/     ← sd-server binary
+└── web/
+├── index.html
+├── css/
+└── js/
 
-- 🔧 Configuration
-- Everything is in server/config.json.
-- 📦 Programs example
-- "chat": {
-- "name": "Chat LLM",
-- "type": "llm",
-- "exe": "./llama.cpp/llama-server.exe",
-- "models_path": "../models/chat",
-- "port": 5001,
-- "context": 1024,
-- "context_options": [512, 1024, 2048, 4096, 8192]
-- }
+-🔧 Configuration
+Everything is in server/config.json.
+📦 Programs example
+"chat": {
+"name": "Chat LLM",
+"type": "llm",
+"exe": "./llama.cpp/llama-server.exe",
+"models_path": "../models/chat",
+"port": 5001,
+"context": 1024,
+"context_options": [512, 1024, 2048, 4096, 8192]
+}
 
-- ⚠️ No default_model needed — the first model found in the folder is loaded automatically.
+⚠️ No default_model needed — the first model found in the folder is loaded automatically.
 
 - 🖥️ GPU Options example
-- "gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device 0" },
-- "gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device 1" },
-- "multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --tensor-split 1,1" },
-- "cpu":   { "label": "CPU only",  "llm_args": "--n-gpu-layers 0" }
+"gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device 0" },
+"gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device 1" },
+"multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --tensor-split 1,1" },
+"cpu":   { "label": "CPU only",  "llm_args": "--n-gpu-layers 0" }
 
 - ⚡ Shortcuts example
-- {
-- "id": "huggingface",
-- "name": "HuggingFace",
-- "type": "url",
-- "url": "https://huggingface.co",
-- "icon": "bi-box-seam"
-- }
-- "type": "url" → opens in browser
-- "type": "app" → launches a local executable
+{
+"id": "huggingface",
+"name": "HuggingFace",
+"type": "url",
+"url": "https://huggingface.co",
+"icon": "bi-box-seam"
+}
+"type": "url" → opens in browser
+"type": "app" → launches a local executable
 
 - ⭐ Image Prompt Agent
-- The AI agent generates optimized Stable Diffusion prompts from a simple idea — in any language.
-- Your idea (any language)
-- ↓
-- Chat LLM — port 5001
-- ↓
-- ✅ Positive prompt (EN)
-- 🚫 Negative prompt (EN)
+The AI agent generates optimized Stable Diffusion prompts from a simple idea — in any language.
+Your idea (any language)
+ ↓
+Chat LLM — port 5001
+ ↓
+✅ Positive prompt (EN)
+🚫 Negative prompt (EN)
 
 - How to use:
-- Click Open Agent Prompt in the left panel
-- Write your idea in any language
-- Click Generate Prompt
-- Copy the result directly into your SD workflow
-- ⚠️ Requires Chat LLM server running on port 5001.
+Click Open Agent Prompt in the left panel
+Write your idea in any language
+Click Generate Prompt
+Copy the result directly into your SD workflow
+⚠️ Requires Chat LLM server running on port 5001.
 
 - 📌 Important Notes
 - 🖥️ Coding LLM — Multi-GPU required for large models
-- Models 6.7B+ (e.g. DeepSeek Coder 6.7B Q4_K_M) require multi-GPU to run smoothly.
-- Configure "multi" in gpu_options inside config.json with the correct Vulkan args.
-- Tested: 2x RX 580 4GB — Vulkan multi-GPU ✅
-- 🎨 LoRA — Auto-loaded by sd-server
-- LoRA files are not selected from the AI Launcher UI.
-- They are automatically loaded by sd-server from the models/lora/ folder via --lora-model-dir.
-- Simply place your .safetensors LoRA files in models/lora/ — no further configuration needed.
-- 🎛️ VAE — Selectable from UI
-- VAE files are selectable directly from the AI Launcher interface before launching Stable Diffusion.
-- Place your VAE files in models/vae/.
+Models 6.7B+ (e.g. DeepSeek Coder 6.7B Q4_K_M) require multi-GPU to run smoothly.
+Configure "multi" in gpu_options inside config.json with the correct Vulkan args.
+Tested: 2x RX 580 4GB — Vulkan multi-GPU ✅
+🎨 LoRA — Auto-loaded by sd-server
+LoRA files are not selected from the AI Launcher UI.
+They are automatically loaded by sd-server from the models/lora/ folder via --lora-model-dir.
+Simply place your .safetensors LoRA files in models/lora/ — no further configuration needed.
+🎛️ VAE — Selectable from UI
+VAE files are selectable directly from the AI Launcher interface before launching Stable Diffusion.
+Place your VAE files in models/vae/.
 
 - ❓ FAQ
 - Backend not accessible?
-- Check that run_launcher.bat started Flask correctly on http://127.0.0.1:5000.
-- Look at the terminal window for error messages.
+Check that run_launcher.bat started Flask correctly on http://127.0.0.1:5000.
+Look at the terminal window for error messages.
 - No models displayed?
-- Check paths in config.json — folders must exist and contain .gguf or .safetensors files.
+Check paths in config.json — folders must exist and contain .gguf or .safetensors files.
 - Image Prompt Agent not responding?
-- The Chat LLM server must be ON and running on port 5001 before using the agent.
+The Chat LLM server must be ON and running on port 5001 before using the agent.
 - How to add a new shortcut?
-- Add an entry in "shortcuts" inside config.json and reload the page.
+Add an entry in "shortcuts" inside config.json and reload the page.
 - Coding LLM not starting?
-- Models 6.7B+ require multi-GPU. Select Multi-GPU in the GPU panel and check your Vulkan args in config.json.
+Models 6.7B+ require multi-GPU. Select Multi-GPU in the GPU panel and check your Vulkan args in config.json.
 - LoRA not applied to images?
-- LoRA is managed automatically by sd-server. Make sure your .safetensors files are in models/lora/ before launching Stable Diffusion.
+LoRA is managed automatically by sd-server. Make sure your .safetensors files are in models/lora/ before launching Stable Diffusion.
 
 ## Contributing
 
