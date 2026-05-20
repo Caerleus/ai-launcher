@@ -1,0 +1,45 @@
+# ============================================================
+# AI Launcher — .gitignore
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# AI Models — never commit (too large)
+models/chat/*.gguf
+models/coding/*.gguf
+models/sd/*.safetensors
+models/sd/*.ckpt
+models/lora/*.safetensors
+models/vae/*.ckpt
+models/vae/*.safetensors
+
+# Dev tools (internal use only)
+scan_italian.py
+classify_italian.py
+sync_to_sharepoint.py
+italian_strings_report.csv
+italian_classified.csv
+_memory/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Temp
+*.tmp
+*.bak
