@@ -143,6 +143,7 @@ Shortcuts
 
 
 🚀 Usage
+
 run_launcher.bat
 
 Option B — Terminal
