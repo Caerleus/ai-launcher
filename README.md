@@ -109,6 +109,7 @@ pip install flask flask-cors psutil pywebview
 > You are responsible for downloading models you have the right to use.
 > Recommended sources: [HuggingFace](https://huggingface.co), [TheBloke quants](https://huggingface.co/TheBloke).
 
+
 ⚙️ Configuration
 
 All configuration lives in: 
@@ -152,6 +153,7 @@ A PyWebView window opens automatically.
 
 
 🎨 Image Prompt Agent
+
 The integrated agent converts any idea (in any language) into:
 
 Positive prompt (EN)
