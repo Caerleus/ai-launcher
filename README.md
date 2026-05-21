@@ -12,7 +12,7 @@ Everything runs on your machine. No telemetry. No subscriptions. No data leaves 
 
 ---
 
-### 🧭 Design Principles
+## 🧭 Design Principles
 
 - **100% local** — no cloud, no telemetry, no external calls.  
 - **Zero friction** — one click to launch everything.  
@@ -24,7 +24,7 @@ Everything runs on your machine. No telemetry. No subscriptions. No data leaves 
 ---
 
 
-### ❓ Why AI Launcher?
+## ❓ Why AI Launcher?
 
 Because running local AI shouldn’t require:
 
@@ -45,7 +45,7 @@ Because running local AI shouldn’t require:
 
 ---
 
-### 👤 Who is this for?
+## 👤 Who is this for?
 
 - Developers using **llama.cpp** or **stable-diffusion.cpp** locally  
 - Users with **low-budget GPUs** (RX 580, RX 6800, etc.)  
@@ -55,7 +55,7 @@ Because running local AI shouldn’t require:
 
 ---
 
-### ❌ Why not use LM Studio / Ollama / Fooocus?
+## ❌ Why not use LM Studio / Ollama / Fooocus?
 
 AI Launcher is **not** a competitor.  
 It’s a **minimal launcher** for people who want:
@@ -72,7 +72,7 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 ---
 
 
-### ✨ Features
+## ✨ Features
 
 | Feature | Description |
 |--------|-------------|
@@ -88,7 +88,7 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 
 ---
 
-### ⚡ Quick Start
+## ⚡ Quick Start
 
 1. Download [latest release ZIP](https://github.com/Caerleus/ai-launcher/releases/latest)
 2. Extract anywhere
@@ -97,17 +97,41 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 5. Done. 🚀
 
 
-### 📦 Installation
-
-```bash
-# Clone the repo (replace with your fork if needed)
-git clone https://github.com/Caerleus/ai-launcher.git
-cd ai-launcher
-pip install flask flask-cors psutil pywebview
+## 📦 Installation
 
 > ⚠️ **Note on models**: AI Launcher does not include any model.
 > You are responsible for downloading models you have the right to use.
 > Recommended sources: [HuggingFace](https://huggingface.co), [TheBloke quants](https://huggingface.co/TheBloke).
+
+### ⊞ Windows (recommended)
+
+```bash
+git clone https://github.com/Caerleus/ai-launcher.git
+cd ai-launcher
+run_launcher.bat
+```
+
+That's it. `run_launcher.bat` is **self-healing**:
+
+- Detects Python 3.9+
+- Creates a local virtual environment (`.venv/`)
+- Installs dependencies from `requirements.txt`
+- Starts the Flask backend and opens a native PyWebView window
+
+If you accidentally delete `.venv/`, just relaunch the script — it rebuilds itself automatically.
+
+### 🐧 Linux / macOS (manual)
+
+Cross-platform support is planned for v1.2. For now:
+
+```bash
+git clone https://github.com/Caerleus/ai-launcher.git
+cd ai-launcher
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cd server && python app.py
+```
 
 
 ⚙️ Configuration
@@ -169,6 +193,19 @@ Requirements:
 Chat LLM server must be running
 
 Port 5001 must be free
+
+
+## 🧪 Tests
+
+AI Launcher v1.1 ships with a small but focused test suite covering the
+critical utilities: path validation (security), file discovery, port
+checking, CLI argument parsing, and config loading.
+
+```bash
+.venv\Scripts\activate
+pytest
+
+Expected output: 36 passed in 1.7s
 
 
 📁 Project Structure
@@ -245,37 +282,58 @@ No external dependencies after installation
 Your data stays on your machine.
 
 
-🗺️ Roadmap — Version 1.1
+```markdown
+## 🗺️ Roadmap
 
-Improved GPU handling
+### ✅ v1.1 (current)
 
-Better multi-GPU support
+- Self-healing `.venv` launcher
+- JSON Schema validation for `config.json`
+- GBNF grammar for the SD prompt agent (no more drift after 3 calls)
+- Rate limiting on `/api/run`
+- Thread-safe process registry with auto-cleanup
+- Test suite (36 tests, <2s)
+- Native window via PyWebView (graceful browser fallback)
 
-Larger model compatibility
+### 🔜 v1.2 (planned)
 
-UI refinements
-
-Optional screenshot/GIF integration
-
-Optional model info panel
+- User-controlled context size (FEAT-001)
+- Configurable shortcuts popup (FEAT-002)
+- macOS / Linux support
+- Optional screenshots / GIF demo
 
 
 ❓ FAQ
 
-Backend not accessible?  
+**Backend not accessible?  
 Check that run_launcher.bat started Flask correctly.
 
-No models displayed?  
+**No models displayed?  
 Verify paths in config.json.
 
-Image Prompt Agent not responding?  
+**Image Prompt Agent not responding?  
 Chat LLM must be running on port 5001.
 
-Coding LLM not starting?  
+**Coding LLM not starting?  
 Large models require multi-GPU.
 
-LoRA not applied?  
+**LoRA not applied?  
 LoRA is auto-loaded by sd-server from models/lora/.
+
+**`.venv` got corrupted / I deleted it by mistake?**
+No problem — `run_launcher.bat` will rebuild it on the next launch.
+
+**Tests fail with `ModuleNotFoundError: utils`?**
+Make sure you activate the venv before running pytest:
+`.venv\Scripts\activate` then `pytest`.
+
+**PyWebView window does not open?**
+Open `http://127.0.0.1:5000` in any browser. The app falls back
+gracefully if PyWebView fails to load.
+
+**Port 5001 / 5002 / 5003 already in use?**
+Find the squatter: `netstat -ano | findstr :5001` and kill it.
+The launcher also auto-kills stale processes on the configured port.
 
 
 ⚠️ Limitations
