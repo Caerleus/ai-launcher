@@ -1,195 +1,284 @@
 # AI Launcher
 
-**Launch and manage your local AI models — LLM + Stable Diffusion — from a clean local interface.**  
-No cloud. No subscriptions. No data sent anywhere. Ever.
+**A clean, local-first launcher for your AI models — LLM + Stable Diffusion — with zero cloud dependencies.**  
+Everything runs on your machine. No telemetry. No subscriptions. No data leaves your device.
 
-[🚀 Get Started](#-installation) · [⚙️ Configuration](#️-configuration) · [❓ FAQ](#-faq)
+<p align="left">
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python" />
+  <img src="https://img.shields.io/badge/Flask-Backend-black?style=for-the-badge&logo=flask" />
+  <img src="https://img.shields.io/badge/Local%20AI-100%25-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" />
+</p>
 
+---
 
+## 🧭 Design Principles
 
-## 🎯 Overview
+- **100% local** — no cloud, no telemetry, no external calls.  
+- **Zero friction** — one click to launch everything.  
+- **Minimal UI** — no clutter, no distractions.  
+- **Transparent** — simple `config.json`, no hidden logic.  
+- **Extensible** — easy to modify, fork, or integrate.  
+- **Respect hardware constraints** — designed to run even on low‑VRAM GPUs.
 
-**AI Launcher** is a local web interface that lets you:
+---
 
-- 🧠 **Start and stop** LLM servers (Chat, Coding) and Stable Diffusion
-- 🎨 **Select models, LoRA, VAE and GPU** in a few clicks
-- ⭐ **Generate optimized prompts** for Stable Diffusion via an integrated AI agent
-- ⚡ **Access your favorite AI tools** via configurable shortcuts
-- 📊 **Monitor server status** in real time
+## ❓ Why AI Launcher?
 
-> Everything runs on your machine. No internet required after setup.
+Because running local AI shouldn’t require:
+
+- memorizing command-line arguments  
+- juggling multiple terminals  
+- editing scripts every time you switch a model  
+- dealing with complex UI frameworks  
+- relying on cloud-based tools  
+
+**AI Launcher gives you:**
+
+- a single place to manage LLMs and Stable Diffusion  
+- automatic model discovery  
+- GPU selection  
+- real-time status monitoring  
+- an integrated prompt generator  
+- a native window (PyWebView) — no browser needed  
+
+---
+
+## 👤 Who is this for?
+
+- Developers using **llama.cpp** or **stable-diffusion.cpp** locally  
+- Users with **low-budget GPUs** (RX 580, RX 6800, etc.)  
+- People who want **full control** over their local AI stack  
+- Anyone who prefers **local AI over cloud AI**  
+- Tinkerers, hobbyists, and power users  
+
+---
+
+## ❌ Why not use LM Studio / Ollama / Fooocus?
+
+AI Launcher is **not** a competitor.  
+It’s a **minimal launcher** for people who want:
+
+- direct control over llama.cpp and sd.cpp  
+- no background services  
+- no proprietary layers  
+- no model management  
+- no cloud dependencies  
+- no forced ecosystem  
+
+If you want a lightweight, transparent, hackable launcher — this is it.
 
 ---
 
 ## ✨ Features
 
 | Feature | Description |
-|---|---|
+|--------|-------------|
 | 🚀 **Quick Launch** | Start Chat LLM, Coding LLM and Stable Diffusion in one click |
-| 🎨 **Model Selection** | Auto-detects your local `.gguf` and `.safetensors` files |
-| 🖥️ **GPU Management** | Multi-GPU support via Vulkan (tested: 2x RX 580 4GB) |
-| 🔗 **LoRA & VAE** | Auto-loaded from `models/lora/` — VAE selectable from UI |
-| ⭐ **Image Prompt Agent** | Write your idea in any language → AI generates an optimized SD prompt |
-| ⚡ **Shortcuts** | Quick access to HuggingFace, local apps and custom URLs |
+| 🎨 **Model Selection** | Auto-detects `.gguf`, `.safetensors`, `.ckpt` |
+| 🖥️ **GPU Management** | Multi-GPU Vulkan support (tested: RX 580 / RX 6800) |
+| 🔗 **LoRA & VAE** | LoRA auto-loaded by sd-server; VAE selectable from UI |
+| ⭐ **Image Prompt Agent** | Generates optimized SD prompts from natural language |
+| ⚡ **Shortcuts** | Add links to HuggingFace, local apps, tools |
 | 📊 **Real-time Status** | Port monitoring every 5 seconds |
-| 💾 **Persistent Choices** | Your model and GPU selections are saved between sessions |
+| 💾 **Persistent Choices** | Your selections are saved between sessions |
+| 🪟 **Native Window** | PyWebView — no browser required |
 
 ---
 
-## ⚙️ Requirements
-
-### Software
-
-- 🐍 **Python 3.10+** — [python.org](https://python.org)
-- ⚡ **llama-server** — from [llama.cpp](https://github.com/ggerganov/llama.cpp) compiled with Vulkan
-- 🎨 **sd-server** — from [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)
-
-### Python Dependencies
+## 📦 Installation
 
 ```bash
-pip install flask flask-cors psutil pywebview
-
-## Installation
-
-```bash
-1. Clone the repository (Not for now)
 git clone https://github.com/your-username/ai-launcher.git
 cd ai-launcher
-
-2. Install dependencies
 pip install flask flask-cors psutil pywebview
 
-3. Configure server/config.json (Optional)
-Adapt the paths to your machine (see ​Configuration​).
-```
+⚙️ Configuration
 
-## Usage
+All configuration lives in: 
+server/config.json
 
-4. Launch
-# Option A — double-click
+Example — Chat LLM
+"chat": {
+  "name": "Chat LLM",
+  "type": "llm",
+  "exe": "./llama.cpp/llama-server.exe",
+  "models_path": "../models/chat",
+  "port": 5001,
+  "context": 1024,
+  "context_options": [512, 1024, 2048, 4096, 8192]
+}
+
+GPU Options
+"gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device 0" },
+"gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device 1" },
+"multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --tensor-split 1,1" },
+"cpu":   { "label": "CPU only",  "llm_args": "--n-gpu-layers 0" }
+
+Shortcuts
+{
+  "id": "huggingface",
+  "name": "HuggingFace",
+  "type": "url",
+  "url": "https://huggingface.co",
+  "icon": "bi-box-seam"
+}
+
+🚀 Usage
 run_launcher.bat
 
-# Option B — terminal
+Option B — Terminal
 cd server
 python app.py
 
-5. Open your browser
-http://127.0.0.1:5000 (Optional)
-🪟 A native PyWebView window opens automatically — no browser needed.
+A PyWebView window opens automatically.
 
-## Features
+🎨 Image Prompt Agent
+The integrated agent converts any idea (in any language) into:
 
-- 📁 Project Structure
-- AI-Launcher/
-- ├── run_launcher.bat          ← Start here
-- ├── server/
-- │   ├── app.py                ← Flask backend
-- │   ├── config.json           ← All configuration
-- │   ├── launcher.py           ← Process manager
-- │   └── utils.py              ← Utility functions
-- ├── models/
-- │   ├── chat/                 ← LLM Chat models (.gguf)
-- │   ├── coding/               ← LLM Coding models (.gguf)
-- │   ├── sd/                   ← Stable Diffusion models
-- │   ├── lora/                 ← LoRA files (.safetensors)
-- │   └── vae/                  ← VAE files
-- ├── llama.cpp/                ← llama-server binary
-- ├── stable-diffusion.cpp/     ← sd-server binary
-- └── web/
-- ├── index.html
-- ├── css/
-- └── js/
+Positive prompt (EN)
 
-- 🔧 Configuration
-- Everything is in server/config.json.
-- 📦 Programs example
-- "chat": {
-- "name": "Chat LLM",
-- "type": "llm",
-- "exe": "./llama.cpp/llama-server.exe",
-- "models_path": "../models/chat",
-- "port": 5001,
-- "context": 1024,
-- "context_options": [512, 1024, 2048, 4096, 8192]
-- }
+Negative prompt (EN)
 
-- ⚠️ No default_model needed — the first model found in the folder is loaded automatically.
+Flow:
+Your idea → Chat LLM (port 5001) → Optimized SD prompts
 
-- 🖥️ GPU Options example
-- "gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device 0" },
-- "gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device 1" },
-- "multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --tensor-split 1,1" },
-- "cpu":   { "label": "CPU only",  "llm_args": "--n-gpu-layers 0" }
+Requirements:
 
-- ⚡ Shortcuts example
-- {
-- "id": "huggingface",
-- "name": "HuggingFace",
-- "type": "url",
-- "url": "https://huggingface.co",
-- "icon": "bi-box-seam"
-- }
-- "type": "url" → opens in browser
-- "type": "app" → launches a local executable
+Chat LLM server must be running
 
-- ⭐ Image Prompt Agent
-- The AI agent generates optimized Stable Diffusion prompts from a simple idea — in any language.
-- Your idea (any language)
-- ↓
-- Chat LLM — port 5001
-- ↓
-- ✅ Positive prompt (EN)
-- 🚫 Negative prompt (EN)
+Port 5001 must be free
 
-- How to use:
-- Click Open Agent Prompt in the left panel
-- Write your idea in any language
-- Click Generate Prompt
-- Copy the result directly into your SD workflow
-- ⚠️ Requires Chat LLM server running on port 5001.
+📁 Project Structure
 
-- 📌 Important Notes
-- 🖥️ Coding LLM — Multi-GPU required for large models
-- Models 6.7B+ (e.g. DeepSeek Coder 6.7B Q4_K_M) require multi-GPU to run smoothly.
-- Configure "multi" in gpu_options inside config.json with the correct Vulkan args.
-- Tested: 2x RX 580 4GB — Vulkan multi-GPU ✅
-- 🎨 LoRA — Auto-loaded by sd-server
-- LoRA files are not selected from the AI Launcher UI.
-- They are automatically loaded by sd-server from the models/lora/ folder via --lora-model-dir.
-- Simply place your .safetensors LoRA files in models/lora/ — no further configuration needed.
-- 🎛️ VAE — Selectable from UI
-- VAE files are selectable directly from the AI Launcher interface before launching Stable Diffusion.
-- Place your VAE files in models/vae/.
+AI-Launcher/
+├── run_launcher.bat
+├── server/
+│   ├── app.py
+│   ├── config.json
+│   ├── launcher.py
+│   └── utils.py
+├── models/
+│   ├── chat/
+│   ├── coding/
+│   ├── sd/
+│   ├── lora/
+│   └── vae/
+├── llama.cpp/
+├── stable-diffusion.cpp/
+└── web/
+    ├── index.html
+    ├── css/
+    └── js/
 
-- ❓ FAQ
-- Backend not accessible?
-- Check that run_launcher.bat started Flask correctly on http://127.0.0.1:5000.
-- Look at the terminal window for error messages.
-- No models displayed?
-- Check paths in config.json — folders must exist and contain .gguf or .safetensors files.
-- Image Prompt Agent not responding?
-- The Chat LLM server must be ON and running on port 5001 before using the agent.
-- How to add a new shortcut?
-- Add an entry in "shortcuts" inside config.json and reload the page.
-- Coding LLM not starting?
-- Models 6.7B+ require multi-GPU. Select Multi-GPU in the GPU panel and check your Vulkan args in config.json.
-- LoRA not applied to images?
-- LoRA is managed automatically by sd-server. Make sure your .safetensors files are in models/lora/ before launching Stable Diffusion.
+🧱 Architecture Overview
 
-## Contributing
+PyWebView UI
+     ↓
+Flask Backend (app.py)
+     ↓
+launcher.py → starts/stops processes
+     ↓
+llama-server / sd-server
+
+Everything is local.
+No external calls.
+No cloud.
+
+🖥️ Supported Hardware
+
+AI Launcher 1.0 is optimized for:
+
+AMD GPUs with 4GB VRAM (RX 580, RX 570 tested)
+
+CPU-only mode (slow but works)
+
+Vulkan backend
+
+Version 1.1 will target:
+
+GPUs with higher VRAM
+
+Larger LLMs
+
+Faster SD inference
+
+🔐 Privacy & Security
+
+100% local
+
+No cloud APIs
+
+No telemetry
+
+No analytics
+
+No data collection
+
+No external dependencies after installation
+
+Your data stays on your machine.
+
+🗺️ Roadmap — Version 1.1
+
+Improved GPU handling
+
+Better multi-GPU support
+
+Larger model compatibility
+
+UI refinements
+
+Optional screenshot/GIF integration
+
+Optional model info panel
+
+❓ FAQ
+
+Backend not accessible?  
+Check that run_launcher.bat started Flask correctly.
+
+No models displayed?  
+Verify paths in config.json.
+
+Image Prompt Agent not responding?  
+Chat LLM must be running on port 5001.
+
+Coding LLM not starting?  
+Large models require multi-GPU.
+
+LoRA not applied?  
+LoRA is auto-loaded by sd-server from models/lora/.
+
+⚠️ Limitations
+
+No model downloader (by design)
+
+No cloud integration
+
+No automatic updates
+
+No NVIDIA-specific optimizations (yet)
+
+No built-in model management UI
 
 🙏 Acknowledgements
-Project	Role
-​llama.cpp​	Local LLM engine
-​stable-diffusion.cpp​	Local image generation
-​Flask​	Backend framework
-​Bootstrap​	UI framework
-​PyWebView​	Native window
 
-## License
+## 🙏 Acknowledgements
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **[llama.cpp](https://github.com/ggerganov/llama.cpp)** — Local LLM engine  
+- **[stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)** — Local image generation  
+- **Flask** — Backend framework  
+- **Bootstrap** — UI framework  
+- **PyWebView** — Native desktop window  
 
-## Author
+
+📜 License
+
+MIT License — see LICENSE.
+
+👤 Author
 
 Caerleus
+
+- Creator of AI Launcher
