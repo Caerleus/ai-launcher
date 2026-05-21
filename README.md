@@ -23,6 +23,7 @@ Everything runs on your machine. No telemetry. No subscriptions. No data leaves 
 
 ---
 
+
 ## ❓ Why AI Launcher?
 
 Because running local AI shouldn’t require:
@@ -70,6 +71,7 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 
 ---
 
+
 ## ✨ Features
 
 | Feature | Description |
@@ -85,6 +87,7 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 | 🪟 **Native Window** | PyWebView — no browser required |
 
 ---
+
 
 ## 📦 Installation
 
@@ -124,6 +127,7 @@ Shortcuts
   "icon": "bi-box-seam"
 }
 
+
 🚀 Usage
 run_launcher.bat
 
@@ -132,6 +136,7 @@ cd server
 python app.py
 
 A PyWebView window opens automatically.
+
 
 🎨 Image Prompt Agent
 The integrated agent converts any idea (in any language) into:
@@ -148,6 +153,7 @@ Requirements:
 Chat LLM server must be running
 
 Port 5001 must be free
+
 
 📁 Project Structure
 
@@ -171,6 +177,7 @@ AI-Launcher/
     ├── css/
     └── js/
 
+
 🧱 Architecture Overview
 
 PyWebView UI
@@ -184,6 +191,7 @@ llama-server / sd-server
 Everything is local.
 No external calls.
 No cloud.
+
 
 🖥️ Supported Hardware
 
@@ -203,6 +211,7 @@ Larger LLMs
 
 Faster SD inference
 
+
 🔐 Privacy & Security
 
 100% local
@@ -219,6 +228,7 @@ No external dependencies after installation
 
 Your data stays on your machine.
 
+
 🗺️ Roadmap — Version 1.1
 
 Improved GPU handling
@@ -232,6 +242,7 @@ UI refinements
 Optional screenshot/GIF integration
 
 Optional model info panel
+
 
 ❓ FAQ
 
@@ -250,6 +261,7 @@ Large models require multi-GPU.
 LoRA not applied?  
 LoRA is auto-loaded by sd-server from models/lora/.
 
+
 ⚠️ Limitations
 
 No model downloader (by design)
@@ -262,9 +274,8 @@ No NVIDIA-specific optimizations (yet)
 
 No built-in model management UI
 
-🙏 Acknowledgements
 
-## 🙏 Acknowledgements
+🙏 Acknowledgements
 
 - **[llama.cpp](https://github.com/ggerganov/llama.cpp)** — Local LLM engine  
 - **[stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)** — Local image generation  
@@ -276,6 +287,7 @@ No built-in model management UI
 📜 License
 
 MIT License — see LICENSE.
+
 
 👤 Author
 
