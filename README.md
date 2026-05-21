@@ -12,7 +12,7 @@ Everything runs on your machine. No telemetry. No subscriptions. No data leaves 
 
 ---
 
-## 🧭 Design Principles
+### 🧭 Design Principles
 
 - **100% local** — no cloud, no telemetry, no external calls.  
 - **Zero friction** — one click to launch everything.  
@@ -24,7 +24,7 @@ Everything runs on your machine. No telemetry. No subscriptions. No data leaves 
 ---
 
 
-## ❓ Why AI Launcher?
+### ❓ Why AI Launcher?
 
 Because running local AI shouldn’t require:
 
@@ -45,7 +45,7 @@ Because running local AI shouldn’t require:
 
 ---
 
-## 👤 Who is this for?
+### 👤 Who is this for?
 
 - Developers using **llama.cpp** or **stable-diffusion.cpp** locally  
 - Users with **low-budget GPUs** (RX 580, RX 6800, etc.)  
@@ -55,7 +55,7 @@ Because running local AI shouldn’t require:
 
 ---
 
-## ❌ Why not use LM Studio / Ollama / Fooocus?
+### ❌ Why not use LM Studio / Ollama / Fooocus?
 
 AI Launcher is **not** a competitor.  
 It’s a **minimal launcher** for people who want:
@@ -72,7 +72,7 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 ---
 
 
-## ✨ Features
+### ✨ Features
 
 | Feature | Description |
 |--------|-------------|
@@ -88,13 +88,26 @@ If you want a lightweight, transparent, hackable launcher — this is it.
 
 ---
 
+### ⚡ Quick Start
 
-## 📦 Installation
+1. Download [latest release ZIP](https://github.com/Caerleus/ai-launcher/releases/latest)
+2. Extract anywhere
+3. Drop a `.gguf` model into `models/chat/`
+4. Double-click `run_launcher.bat`
+5. Done. 🚀
+
+
+### 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/ai-launcher.git
+# Clone the repo (replace with your fork if needed)
+git clone https://github.com/Caerleus/ai-launcher.git
 cd ai-launcher
 pip install flask flask-cors psutil pywebview
+
+> ⚠️ **Note on models**: AI Launcher does not include any model.
+> You are responsible for downloading models you have the right to use.
+> Recommended sources: [HuggingFace](https://huggingface.co), [TheBloke quants](https://huggingface.co/TheBloke).
 
 ⚙️ Configuration
 
@@ -105,18 +118,18 @@ Example — Chat LLM
 "chat": {
   "name": "Chat LLM",
   "type": "llm",
-  "exe": "./llama.cpp/llama-server.exe",
+  "exe": "../llama.cpp/llama-server.exe",
   "models_path": "../models/chat",
   "port": 5001,
-  "context": 1024,
+  "context": 4096,
   "context_options": [512, 1024, 2048, 4096, 8192]
 }
 
 GPU Options
-"gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device 0" },
-"gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device 1" },
-"multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --tensor-split 1,1" },
-"cpu":   { "label": "CPU only",  "llm_args": "--n-gpu-layers 0" }
+"gpu0":  { "label": "GPU 0",     "llm_args": "--n-gpu-layers 99 --device Vulkan0" },
+"gpu1":  { "label": "GPU 1",     "llm_args": "--n-gpu-layers 99 --device Vulkan1" },
+"multi": { "label": "Multi-GPU", "llm_args": "--n-gpu-layers 99 --device Vulkan0,Vulkan1" },
+"cpu":   { "label": "CPU",  "llm_args": "" }
 
 Shortcuts
 {
@@ -277,7 +290,7 @@ No built-in model management UI
 
 🙏 Acknowledgements
 
-- **[llama.cpp](https://github.com/ggerganov/llama.cpp)** — Local LLM engine  
+- **[llama.cpp](https://github.com/ggml-org/llama.cpp)** — Local LLM engine
 - **[stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)** — Local image generation  
 - **Flask** — Backend framework  
 - **Bootstrap** — UI framework  
@@ -286,11 +299,9 @@ No built-in model management UI
 
 📜 License
 
-MIT License — see LICENSE.
+MIT License — see LICENSE .
 
 
-👤 Author
+## 👤 Author
 
-Caerleus
-
-- Creator of AI Launcher
+[Caerleus](https://github.com/Caerleus) — Creator of AI Launcher
